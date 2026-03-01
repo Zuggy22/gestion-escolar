@@ -7,7 +7,8 @@ Características
 
 
 🚀 Instalación
-bash# 1. Clonar el repositorio
+
+# 1. Clonar el repositorio
 git clone https://github.com/TU_USUARIO/App_Gestion_Escolar.git
 cd App_Gestion_Escolar
 
