@@ -9,7 +9,7 @@ Características
 🚀 Instalación
 
 # 1. Clonar el repositorio
-git clone https://github.com/TU_USUARIO/App_Gestion_Escolar.git
+git clone https://github.com/Zuggy22/App_Gestion_Escolar.git
 cd App_Gestion_Escolar
 
 # 2. Activar entorno virtual
