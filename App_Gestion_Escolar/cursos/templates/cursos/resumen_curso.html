@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block titulo %}Curso Creado{% endblock %}
+{% block contenido %}
+<div class="page-header"><h1>✅ Registro Exitoso</h1></div>
+<div class="resumen-card">
+    <h2>🎉 ¡El curso ha sido registrado!</h2>
+    <div class="resumen-fila">
+        <span class="etiqueta">Nombre del ramo:</span>
+        <span class="valor">{{ nombre_ramo }}</span>
+    </div>
+    <div class="resumen-fila">
+        <span class="etiqueta">Nivel:</span>
+        <span class="valor">{{ nivel }}</span>
+    </div>
+    <div class="resumen-fila">
+        <span class="etiqueta">Jornada:</span>
+        <span class="valor">{{ jornada }}</span>
+    </div>
+    <p style="margin-top:1rem; color:#5a6a80; font-size:0.9rem;">
+        ¡Éxito! El curso <strong>{{ nombre_ramo }}</strong> ha sido registrado en el sistema.
+    </p>
+    <div class="acciones-resumen">
+        <a href="{% url 'cursos:crear' %}" class="btn-primary" style="text-decoration:none; display:inline-block; padding:0.65rem 1.4rem;">➕ Crear otro curso</a>
+        <a href="{% url 'cursos:lista' %}" class="btn-secundario">← Ver lista</a>
+    </div>
+</div>
+{% endblock %}

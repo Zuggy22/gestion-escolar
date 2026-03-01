@@ -1,0 +1,178 @@
+{% comment %}
+login.html — La "Aduana" del Liceo
+
+PASO 2 DEL PDF (Parte III): Instalando la Aduana Principal.
+
+Este formulario usa las vistas nativas de Django (LoginView).
+Django automáticamente:
+  - Muestra el formulario vacío cuando el usuario llega (GET)
+  - Verifica usuario y contraseña cuando envía (POST)
+  - Redirige a LOGIN_REDIRECT_URL si las credenciales son correctas
+
+IMPORTANTE: {% csrf_token %} es la "etiqueta mágica" que protege
+el formulario de ataques externos (Cross-Site Request Forgery).
+Sin ella, Django rechaza el formulario.
+{% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | Liceo Municipal</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <style>
+        /* Estilos específicos de la página de login */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d2b5e 0%, #1a4a8a 100%);
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo .icono {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-logo h1 {
+            font-size: 1.4rem;
+            color: #0d2b5e;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .login-logo p {
+            color: #5a6a80;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .form-grupo {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-grupo label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0d2b5e;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-grupo input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #dce4f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-grupo input:focus {
+            border-color: #0d2b5e;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #0d2b5e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn-login:hover {
+            background-color: #1a4a8a;
+        }
+
+        .error-msg {
+            background-color: #fdecea;
+            border: 1px solid #f5c6cb;
+            color: #b71c1c;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.88rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="login-logo">
+        <span class="icono">🏫</span>
+        <h1>Liceo Municipal</h1>
+        <p>Sistema de Gestión Escolar</p>
+    </div>
+
+    {% comment %}
+    Si Django detecta que el usuario o contraseña son incorrectos,
+    devuelve errores en la variable {{ form.errors }}.
+    Aquí los mostramos de forma amable.
+    {% endcomment %}
+    {% if form.errors %}
+    <div class="error-msg">
+        ⚠️ Usuario o contraseña incorrectos. Por favor, intenta nuevamente.
+    </div>
+    {% endif %}
+
+    {% comment %}
+    method="post" → Los datos viajan de forma segura (no aparecen en la URL)
+    {% csrf_token %} → Protección obligatoria contra ataques CSRF
+    {% endcomment %}
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-grupo">
+            <label for="id_username">👤 Usuario</label>
+            <input type="text"
+                   name="username"
+                   id="id_username"
+                   placeholder="Tu nombre de usuario"
+                   required
+                   autofocus>
+        </div>
+
+        <div class="form-grupo">
+            <label for="id_password">🔒 Contraseña</label>
+            <input type="password"
+                   name="password"
+                   id="id_password"
+                   placeholder="Tu contraseña"
+                   required>
+        </div>
+
+        <button type="submit" class="btn-login">
+            Ingresar al Sistema →
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

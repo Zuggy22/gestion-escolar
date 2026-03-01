@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %}Registrar Profesor{% endblock %}
+{% block contenido %}
+<div class="page-header">
+    <h1>📝 Registrar Nuevo Profesor</h1>
+    <p>Completa la ficha del docente</p>
+</div>
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        {% for campo in formulario %}
+        <div class="form-grupo-django">
+            {{ campo.label_tag }}
+            {{ campo }}
+            {% if campo.errors %}
+                <ul class="errorlist">{% for error in campo.errors %}<li>⚠️ {{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div style="margin-top:1.5rem;">
+            <button type="submit" class="btn-primary">✅ Registrar Profesor</button>
+            <a href="{% url 'profesores:lista' %}" class="btn-secundario">← Volver a la lista</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% comment %}
+base.html — El Plano Maestro (actualizado Parte III)
+
+NUEVO en Parte III:
+- Botón "Cerrar Sesión" en la navbar (solo visible si el usuario está autenticado)
+- Muestra el nombre del usuario logueado
+- El botón de logout usa un formulario POST (más seguro que un simple enlace)
+{% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}App Gestión Escolar{% endblock %} | Liceo Municipal</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            🏫 <span>Liceo</span> Municipal
+        </a>
+
+        <ul class="navbar-links">
+            <li><a href="{% url 'alumnos:lista' %}">👩‍🎓 Alumnos</a></li>
+            <li><a href="{% url 'profesores:lista' %}">👨‍🏫 Profesores</a></li>
+            <li><a href="{% url 'cursos:lista' %}">📚 Cursos</a></li>
+        </ul>
+
+        {% comment %}
+        PASO 3 DEL PDF (Parte III) — Investigación: botón Cerrar Sesión.
+        
+        Usamos {{ request.user.is_authenticated }} para saber si hay sesión activa.
+        Si SÍ hay sesión → mostramos el nombre del usuario y el botón de salida.
+        Si NO hay sesión → mostramos un link para iniciar sesión.
+        
+        El logout se hace con un FORMULARIO POST (no con un <a href>)
+        porque Django exige POST por seguridad para cerrar sesiones.
+        {% endcomment %}
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+            {% if request.user.is_authenticated %}
+                <span style="color:#ccd9f0; font-size:0.85rem;">
+                    👤 {{ request.user.username }}
+                </span>
+                <form method="post" action="{% url 'logout' %}" style="margin:0;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                        background-color: #c0392b;
+                        color: white;
+                        border: none;
+                        padding: 0.4rem 0.9rem;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 0.85rem;
+                        font-family: inherit;
+                    ">🚪 Cerrar Sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" style="color:#f0c040; font-size:0.85rem;">
+                    🔑 Iniciar Sesión
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 <strong>Liceo Municipal</strong> · App Gestión Escolar · Desarrollado en Django</p>
+    </footer>
+
+</body>
+</html>

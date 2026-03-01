@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block titulo %}Profesor Registrado{% endblock %}
+{% block contenido %}
+<div class="page-header"><h1>✅ Registro Exitoso</h1></div>
+<div class="resumen-card">
+    <h2>🎉 ¡El profesor ha sido registrado!</h2>
+    <div class="resumen-fila">
+        <span class="etiqueta">Nombre:</span>
+        <span class="valor">{{ nombre }}</span>
+    </div>
+    <div class="resumen-fila">
+        <span class="etiqueta">Especialidad:</span>
+        <span class="valor">{{ especialidad }}</span>
+    </div>
+    <div class="resumen-fila">
+        <span class="etiqueta">Años de experiencia:</span>
+        <span class="valor">{{ años_exp }} años</span>
+    </div>
+    <p style="margin-top:1rem; color:#5a6a80; font-size:0.9rem;">
+        ¡Éxito! El profesor <strong>{{ nombre }}</strong> ha sido registrado en el sistema.
+    </p>
+    <div class="acciones-resumen">
+        <a href="{% url 'profesores:crear' %}" class="btn-primary" style="text-decoration:none; display:inline-block; padding:0.65rem 1.4rem;">➕ Registrar otro profesor</a>
+        <a href="{% url 'profesores:lista' %}" class="btn-secundario">← Ver lista</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block titulo %}Alumno Registrado{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h1>✅ Registro Exitoso</h1>
+</div>
+
+<div class="resumen-card">
+    <h2>🎉 ¡El alumno ha sido registrado en el sistema!</h2>
+
+    <div class="resumen-fila">
+        <span class="etiqueta">Nombre completo:</span>
+        <span class="valor">{{ nombre }} {{ apellido }}</span>
+    </div>
+    <div class="resumen-fila">
+        <span class="etiqueta">Edad:</span>
+        <span class="valor">{{ edad }} años</span>
+    </div>
+    <div class="resumen-fila">
+        <span class="etiqueta">Correo electrónico:</span>
+        <span class="valor">{{ correo }}</span>
+    </div>
+
+    <p style="margin-top:1rem; color:#5a6a80; font-size:0.9rem;">
+        ¡Éxito! El alumno <strong>{{ nombre }} {{ apellido }}</strong>
+        ha sido registrado en el sistema.
+    </p>
+
+    <div class="acciones-resumen">
+        <a href="{% url 'alumnos:crear' %}" class="btn-primary" style="text-decoration:none; display:inline-block; padding:0.65rem 1.4rem;">
+            ➕ Matricular otro alumno
+        </a>
+        <a href="{% url 'alumnos:lista' %}" class="btn-secundario">← Ver lista de alumnos</a>
+    </div>
+</div>
+{% endblock %}

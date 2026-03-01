@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %}Cursos{% endblock %}
+{% block contenido %}
+<div class="page-header">
+    <h1>📚 {{ titulo }}</h1>
+    <p>Cursos activos del año escolar</p>
+</div>
+<div style="margin-bottom:1.5rem;">
+    <a href="{% url 'cursos:crear' %}" class="btn-primary" style="text-decoration:none; display:inline-block; padding:0.6rem 1.4rem;">➕ Crear nuevo curso</a>
+</div>
+{% if cursos %}
+    <div class="cards-grid">
+        {% for curso in cursos %}
+        <div class="card">
+            <div class="card-nombre">Curso {{ curso.nombre }}</div>
+            <div class="card-detalle">🎓 {{ curso.nivel }}</div>
+            <div class="card-detalle">👨‍🏫 {{ curso.profesor_jefe }}</div>
+            <div class="card-detalle">👥 {{ curso.alumnos }} alumnos</div>
+            <span class="badge">Activo</span>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alerta-vacia">⚠️ No hay cursos registrados.</div>
+{% endif %}
+{% endblock %}
