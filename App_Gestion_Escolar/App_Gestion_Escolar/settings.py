@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'alumnos',
     'profesores',
     'cursos',
+    'predicciones',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,6 @@ USE_TZ = True
 # ---------------------------------------------------------------------------
 # Seguridad — Variables de Autenticación (UNA SOLA VEZ)
 # ---------------------------------------------------------------------------
-LOGIN_REDIRECT_URL  = '/alumnos/'
+LOGIN_REDIRECT_URL  = '/'   # ← Al loguearse va al panel de inicio
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_URL           = 'login'

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block titulo %}Predicciones ML{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h1>🤖 Predicción de Riesgo Académico</h1>
+    <p>Análisis con Machine Learning — Random Forest</p>
+</div>
+
+<!-- Resumen estadístico -->
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:1rem; margin-bottom:2rem;">
+    <div style="background:white; border-radius:12px; padding:1.5rem; text-align:center;
+                box-shadow:0 2px 8px rgba(13,43,94,0.1); border-top:4px solid #6366f1;">
+        <div style="font-size:2.5rem; font-weight:800; color:#0d2b5e;">{{ total }}</div>
+        <div style="color:#64748b; font-size:0.85rem;">Alumnos analizados</div>
+    </div>
+    <div style="background:white; border-radius:12px; padding:1.5rem; text-align:center;
+                box-shadow:0 2px 8px rgba(13,43,94,0.1); border-top:4px solid #22c55e;">
+        <div style="font-size:2.5rem; font-weight:800; color:#166534;">{{ sin_riesgo }}</div>
+        <div style="color:#64748b; font-size:0.85rem;">Sin riesgo</div>
+    </div>
+    <div style="background:white; border-radius:12px; padding:1.5rem; text-align:center;
+                box-shadow:0 2px 8px rgba(13,43,94,0.1); border-top:4px solid #ef4444;">
+        <div style="font-size:2.5rem; font-weight:800; color:#c0392b;">{{ en_riesgo }}</div>
+        <div style="color:#64748b; font-size:0.85rem;">En riesgo</div>
+    </div>
+</div>
+
+<!-- Tabla de predicciones -->
+{% if resultados %}
+<table style="width:100%; border-collapse:collapse; background:white;
+              border-radius:12px; overflow:hidden;
+              box-shadow:0 2px 8px rgba(13,43,94,0.1);">
+    <thead style="background:#0d2b5e; color:white;">
+        <tr>
+            <th style="padding:1rem; text-align:left;">Alumno</th>
+            <th style="padding:1rem; text-align:left;">Curso</th>
+            <th style="padding:1rem; text-align:center;">Promedio</th>
+            <th style="padding:1rem; text-align:center;">Riesgo</th>
+            <th style="padding:1rem; text-align:center;">Probabilidad</th>
+            <th style="padding:1rem; text-align:left;">Recomendación</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in resultados %}
+        <tr style="border-bottom:1px solid #f0f4f8;">
+            <td style="padding:0.8rem 1rem; font-weight:600;">
+                {{ r.alumno.nombre }} {{ r.alumno.apellido }}
+            </td>
+            <td style="padding:0.8rem 1rem;">{{ r.alumno.curso }}</td>
+            <td style="padding:0.8rem 1rem; text-align:center;">
+                <strong>{{ r.alumno.promedio }}</strong>
+            </td>
+            <td style="padding:0.8rem 1rem; text-align:center;">
+                <span style="
+                    background:{{ r.prediccion.color }}22;
+                    color:{{ r.prediccion.color }};
+                    padding:0.3rem 0.8rem;
+                    border-radius:20px;
+                    font-size:0.82rem;
+                    font-weight:700;
+                    border:1px solid {{ r.prediccion.color }}44;">
+                    {{ r.prediccion.emoji }} {{ r.prediccion.nivel }}
+                </span>
+            </td>
+            <td style="padding:0.8rem 1rem; text-align:center;">
+                <!-- Barra de progreso -->
+                <div style="background:#f0f4f8; border-radius:10px; height:8px; width:100px; margin:0 auto 0.3rem;">
+                    <div style="background:{{ r.prediccion.color }}; height:8px; border-radius:10px;
+                                width:{{ r.prediccion.probabilidad }}%;"></div>
+                </div>
+                <span style="font-size:0.78rem; color:#64748b;">
+                    {{ r.prediccion.probabilidad }}%
+                </span>
+            </td>
+            <td style="padding:0.8rem 1rem; font-size:0.85rem; color:#5a6a80;">
+                {{ r.prediccion.mensaje }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alerta-vacia">
+    ⚠️ No hay alumnos registrados para analizar.
+    <a href="{% url 'alumnos:crear' %}">Matricular alumnos →</a>
+</div>
+{% endif %}
+
+<!-- Nota técnica -->
+<div style="margin-top:2rem; background:#f8fafc; border-radius:10px; padding:1.2rem;
+            border-left:4px solid #6366f1; font-size:0.85rem; color:#5a6a80;">
+    <strong style="color:#0d2b5e;">🔬 Sobre el modelo:</strong>
+    El análisis usa el algoritmo <strong>Random Forest</strong> de scikit-learn.
+    Evalúa el promedio y la edad de cada alumno para estimar la probabilidad de riesgo académico.
+    El modelo se re-entrena automáticamente con los datos actuales en cada consulta.
+</div>
+
+{% endblock %}

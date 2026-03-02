@@ -8,28 +8,77 @@
 </div>
 
 <div style="margin-bottom:1.5rem;">
-    <a href="{% url 'alumnos:crear' %}" class="btn-primary" style="text-decoration:none; display:inline-block; padding:0.6rem 1.4rem;">
+    <a href="{% url 'alumnos:crear' %}" class="btn-primary"
+       style="text-decoration:none; display:inline-block; padding:0.6rem 1.4rem;">
         ➕ Matricular nuevo alumno
     </a>
 </div>
+<form method="get" style="margin-bottom:1.5rem; display:flex; gap:0.5rem;">
+    <input type="text" name="q" value="{{ busqueda }}"
+           placeholder="🔍 Buscar alumno por nombre..."
+           style="flex:1; padding:0.65rem 1rem; border:2px solid #dce4f0;
+                  border-radius:8px; font-size:0.95rem; font-family:inherit; outline:none;">
+    <button type="submit" class="btn-primary">Buscar</button>
+    {% if busqueda %}
+        <a href="{% url 'alumnos:lista' %}"
+           style="padding:0.65rem 1rem; background:#f0f4f8; color:#0d2b5e;
+                  border-radius:8px; text-decoration:none; font-size:0.9rem;">
+            ✕ Limpiar
+        </a>
+    {% endif %}
+</form>
 
+{% if busqueda %}
+<p style="color:#64748b; font-size:0.85rem; margin-bottom:1rem;">
+    Resultados para: <strong>{{ busqueda }}</strong> — {{ alumnos.count }} encontrado(s)
+</p>
+{% endif %}
 {% if alumnos %}
-    <div class="cards-grid">
+<table style="width:100%; border-collapse:collapse; background:white;
+              border-radius:10px; overflow:hidden;
+              box-shadow:0 2px 8px rgba(13,43,94,0.1);">
+    <thead style="background:#0d2b5e; color:white;">
+        <tr>
+            <th style="padding:1rem; text-align:left;">Nombre</th>
+            <th style="padding:1rem; text-align:left;">Curso</th>
+            <th style="padding:1rem; text-align:left;">Correo</th>
+            <th style="padding:1rem; text-align:left;">Promedio</th>
+            <th style="padding:1rem; text-align:center;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for alumno in alumnos %}
-        <div class="card">
-            <div class="card-nombre">{{ alumno.nombre }}</div>
-            <div class="card-detalle">🏫 Curso: {{ alumno.curso }}</div>
-            <div class="card-detalle">📊 Promedio: {{ alumno.promedio }}</div>
-            {% if alumno.promedio >= 5.5 %}
-                <span class="badge badge-verde">✅ Aprobado</span>
-            {% else %}
-                <span class="badge badge-rojo">⚠️ En riesgo</span>
-            {% endif %}
-        </div>
+        <tr style="border-bottom:1px solid #f0f4f8;">
+            <td style="padding:0.8rem 1rem;">{{ alumno.nombre }} {{ alumno.apellido }}</td>
+            <td style="padding:0.8rem 1rem;">{{ alumno.curso }}</td>
+            <td style="padding:0.8rem 1rem;">{{ alumno.correo }}</td>
+            <td style="padding:0.8rem 1rem;">
+                {% if alumno.promedio >= 5.5 %}
+                    <span class="badge badge-verde">{{ alumno.promedio }}</span>
+                {% else %}
+                    <span class="badge badge-rojo">{{ alumno.promedio }}</span>
+                {% endif %}
+            </td>
+            <td style="padding:0.8rem 1rem; text-align:center;">
+                <a href="{% url 'alumnos:editar' alumno.pk %}"
+                   style="background:#f0c040; color:#0d2b5e; padding:0.3rem 0.8rem;
+                          border-radius:6px; text-decoration:none; font-size:0.82rem;
+                          font-weight:600; margin-right:0.4rem;">
+                    ✏️ Editar
+                </a>
+                <a href="{% url 'alumnos:eliminar' alumno.pk %}"
+                   style="background:#c0392b; color:white; padding:0.3rem 0.8rem;
+                          border-radius:6px; text-decoration:none; font-size:0.82rem;
+                          font-weight:600;">
+                    🗑️ Eliminar
+                </a>
+            </td>
+        </tr>
         {% endfor %}
-    </div>
+    </tbody>
+</table>
 {% else %}
-    <div class="alerta-vacia">⚠️ No hay alumnos registrados en el sistema.</div>
+<div class="alerta-vacia">⚠️ No hay alumnos registrados en el sistema.</div>
 {% endif %}
 
 {% endblock %}

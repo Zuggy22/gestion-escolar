@@ -1,12 +1,3 @@
-{% comment %}
-base.html — El Plano Maestro (actualizado Parte III)
-
-NUEVO en Parte III:
-- Botón "Cerrar Sesión" en la navbar (solo visible si el usuario está autenticado)
-- Muestra el nombre del usuario logueado
-- El botón de logout usa un formulario POST (más seguro que un simple enlace)
-{% endcomment %}
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -19,6 +10,7 @@ NUEVO en Parte III:
 <body>
 
     <nav class="navbar">
+        <li><a href="{% url 'predicciones:panel' %}">🤖 Predicciones</a></li>
         <a href="#" class="navbar-brand">
             🏫 <span>Liceo</span> Municipal
         </a>
@@ -29,16 +21,7 @@ NUEVO en Parte III:
             <li><a href="{% url 'cursos:lista' %}">📚 Cursos</a></li>
         </ul>
 
-        {% comment %}
-        PASO 3 DEL PDF (Parte III) — Investigación: botón Cerrar Sesión.
-        
-        Usamos {{ request.user.is_authenticated }} para saber si hay sesión activa.
-        Si SÍ hay sesión → mostramos el nombre del usuario y el botón de salida.
-        Si NO hay sesión → mostramos un link para iniciar sesión.
-        
-        El logout se hace con un FORMULARIO POST (no con un <a href>)
-        porque Django exige POST por seguridad para cerrar sesiones.
-        {% endcomment %}
+
         <div style="display:flex; align-items:center; gap:0.75rem;">
             {% if request.user.is_authenticated %}
                 <span style="color:#ccd9f0; font-size:0.85rem;">
@@ -65,12 +48,33 @@ NUEVO en Parte III:
         </div>
     </nav>
 
+    {% if messages %}
+    <div style="position:fixed; top:1rem; right:1rem; z-index:9999; display:flex; flex-direction:column; gap:0.5rem;">
+        {% for message in messages %}
+        <div style="
+            padding: 0.85rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            animation: fadeIn 0.3s ease;
+            background: {% if message.tags == 'error' %}#fdecea{% elif message.tags == 'success' %}#dcfce7{% else %}#e0f2fe{% endif %};
+            color: {% if message.tags == 'error' %}#b71c1c{% elif message.tags == 'success' %}#166534{% else %}#0369a1{% endif %};
+            border-left: 4px solid {% if message.tags == 'error' %}#c0392b{% elif message.tags == 'success' %}#22c55e{% else %}#0284c7{% endif %};">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    <style>
+    @keyframes fadeIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+    </style>
+    {% endif %}
     <main>
         {% block contenido %}{% endblock %}
     </main>
 
     <footer>
-        <p>© 2025 <strong>Liceo Municipal</strong> · App Gestión Escolar · Desarrollado en Django</p>
+        <p>© 2026 <strong>Liceo Municipal</strong> · App Gestión Escolar · Desarrollado por Zuggeits Meriño</p>
     </footer>
 
 </body>

@@ -1,10 +1,5 @@
-"""
-forms.py de la app Profesores
-
-Ficha de inscripción para un nuevo Profesor.
-"""
-
 from django import forms
+from .models import Profesor
 
 ESPECIALIDADES = [
     ('', '-- Seleccionar --'),
@@ -19,28 +14,30 @@ ESPECIALIDADES = [
 ]
 
 
-class ProfesorForm(forms.Form):
-    nombre = forms.CharField(
-        max_length=100,
-        label='Nombre completo',
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Ej: Ana Soto González',
-            'class': 'campo-form',
-        })
-    )
-
-    especialidad = forms.ChoiceField(
-        choices=ESPECIALIDADES,
-        label='Especialidad / Asignatura',
-        widget=forms.Select(attrs={'class': 'campo-form'})
-    )
-
-    años_experiencia = forms.IntegerField(
-        label='Años de experiencia',
-        min_value=0,
-        max_value=50,
-        widget=forms.NumberInput(attrs={
-            'placeholder': 'Ej: 8',
-            'class': 'campo-form',
-        })
-    )
+class ProfesorForm(forms.ModelForm):
+    """
+    ModelForm conectado al modelo Profesor.
+    .save() guarda directamente en la base de datos.
+    """
+    class Meta:
+        model  = Profesor
+        fields = ['nombre', 'especialidad', 'años_experiencia']
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'campo-form',
+                'placeholder': 'Ej: Ana Soto González'
+            }),
+            'especialidad': forms.Select(
+                choices=ESPECIALIDADES,
+                attrs={'class': 'campo-form'}
+            ),
+            'años_experiencia': forms.NumberInput(attrs={
+                'class': 'campo-form',
+                'placeholder': 'Ej: 8'
+            }),
+        }
+        labels = {
+            'nombre':           'Nombre completo',
+            'especialidad':     'Especialidad / Asignatura',
+            'años_experiencia': 'Años de experiencia',
+        }
