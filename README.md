@@ -4,7 +4,7 @@
 El Sistema de Gestión Escolar del Liceo Municipal es una aplicación web desarrollada como proyecto de bootcamp en Python y Django. Su propósito es digitalizar y centralizar los procesos administrativos y académicos de un establecimiento educacional, reemplazando el uso de planillas y documentos físicos por una plataforma moderna, segura y fácil de usar.
 El sistema fue construido de forma incremental, cubriendo desde el CRUD básico hasta funcionalidades avanzadas como predicciones con inteligencia artificial, generación de informes PDF y un canal de comunicación entre apoderados y profesores.
 
-✨#Funcionalidades
+✨# Funcionalidades
 
 👩‍🎓 Gestión de Alumnos
 
@@ -117,15 +117,13 @@ Git
 Pasos de instalación
 
 1. Clonar el repositorio
-bashgit clone https://github.com/tu-usuario/App_Gestion_Escolar.git
+bashgit clone https://github.com/Zuggy22/App_Gestion_Escolar.git
 cd App_Gestion_Escolar
 
-3. Crear y activar el entorno virtual
+2. Crear y activar el entorno virtual
 bash# Windows
 python -m venv .venv
 .venv\Scripts\activate
-
-# macOS / Linux
 python -m venv .venv
 source .venv/bin/activate
 
@@ -134,17 +132,17 @@ bashpip install django
 pip install scikit-learn pandas
 pip install reportlab
 
-5. Aplicar migraciones
+4. Aplicar migraciones
 bashpy manage.py makemigrations
 py manage.py migrate
 
-7. Crear superusuario
+5. Crear superusuario
 bashpy manage.py createsuperuser
 
-9. Iniciar el servidor
+6. Iniciar el servidor
 bashpy manage.py runserver
 
-11. Acceder al sistema
+7. Acceder al sistema
 http://127.0.0.1:8000/
 Configuración de correo electrónico (opcional)
 Para activar las notificaciones por correo entre apoderados y profesores, agrega esto en settings.py:
