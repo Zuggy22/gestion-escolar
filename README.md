@@ -4,7 +4,8 @@
 El Sistema de Gestión Escolar del Liceo Municipal es una aplicación web desarrollada como proyecto de bootcamp en Python y Django. Su propósito es digitalizar y centralizar los procesos administrativos y académicos de un establecimiento educacional, reemplazando el uso de planillas y documentos físicos por una plataforma moderna, segura y fácil de usar.
 El sistema fue construido de forma incremental, cubriendo desde el CRUD básico hasta funcionalidades avanzadas como predicciones con inteligencia artificial, generación de informes PDF y un canal de comunicación entre apoderados y profesores.
 
-✨ Funcionalidades
+✨#Funcionalidades
+
 👩‍🎓 Gestión de Alumnos
 
 Registro completo con nombre, apellido, edad, correo y curso
@@ -42,8 +43,6 @@ Reglas de aprobación combinadas (asistencia + nota):
 Asistencia ≥ 80% + Nota ≥ 4.5 → ✅ Aprobado
 Asistencia 70%–80% + Nota ≥ 5.0 → ✅ Aprobado
 Resto de casos → ❌ Reprobado
-
-
 Barras de progreso con marcadores visuales en 70% y 80%
 
 📄 Informes Académicos
@@ -107,81 +106,6 @@ Enlace al panel de administración solo para superusuarios
 🛠️ Tecnologías Utilizadas
 TecnologíaVersiónUsoPython3.14Lenguaje principalDjango6.0.2Framework webSQLite—Base de datosTailwind CSSCDNEstilos y diseñoChart.jsCDNGráficos en dashboardscikit-learnLatestMachine LearningpandasLatestManipulación de datosReportLabLatestGeneración de PDFGoogle FontsCDNTipografías
 
-📁 Estructura del Proyecto
-App_Gestion_Escolar/
-│
-├── App_Gestion_Escolar/        # Configuración principal
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-│
-├── templates/                  # Templates globales
-│   ├── base.html               # Layout principal (navbar, footer, estilos)
-│   ├── login.html              # Página de inicio de sesión
-│   └── inicio.html             # Dashboard principal
-│
-├── alumnos/                    # App gestión de alumnos
-│   ├── models.py               # Modelo Alumno
-│   ├── views.py                # CRUD + buscador
-│   ├── forms.py
-│   ├── urls.py
-│   └── templates/alumnos/
-│       ├── lista_alumnos.html
-│       ├── crear_alumno.html
-│       ├── resumen_alumno.html
-│       └── confirmar_eliminar.html
-│
-├── profesores/                 # App gestión de profesores
-│   ├── models.py               # Modelo Profesor
-│   ├── views.py
-│   ├── forms.py
-│   ├── urls.py
-│   └── templates/profesores/
-│
-├── cursos/                     # App gestión de cursos
-│   ├── models.py               # Modelo Curso (FK a Profesor)
-│   ├── views.py
-│   ├── forms.py
-│   ├── urls.py
-│   └── templates/cursos/
-│
-├── notas/                      # App notas + asistencia + observaciones
-│   ├── models.py               # Modelos: Nota, Asistencia, Observacion
-│   ├── views.py                # 15+ vistas
-│   ├── forms.py                # NotaForm, AsistenciaForm, ObservacionForm
-│   ├── urls.py
-│   └── templates/notas/
-│       ├── notas_alumno.html
-│       ├── agregar_nota.html
-│       ├── asistencia_alumno.html
-│       ├── registrar_asistencia.html
-│       ├── asistencia_curso.html
-│       ├── resumen_asistencia_curso.html
-│       ├── resumen_asistencia_general.html
-│       ├── resumen_cursos.html
-│       ├── promedio_curso.html
-│       ├── informe_alumno.html
-│       └── confirmar_eliminar_nota.html
-│
-├── apoderados/                 # App módulo apoderados
-│   ├── models.py               # Modelos: Apoderado, MensajeApoderado
-│   ├── views.py                # Lista, detalle, mensajes, bandeja
-│   ├── forms.py                # ApoderadoForm, MensajeForm, RespuestaForm
-│   ├── urls.py
-│   └── templates/apoderados/
-│       ├── lista_apoderados.html
-│       ├── crear_apoderado.html
-│       ├── detalle_apoderado.html
-│       ├── enviar_mensaje.html
-│       ├── responder_mensaje.html
-│       ├── bandeja_mensajes.html
-│       └── confirmar_eliminar.html
-│
-└── predicciones/               # App Machine Learning
-    ├── views.py                # Random Forest
-    ├── urls.py
-    └── templates/predicciones/
-        └── panel_predicciones.html
 
 🚀 Instalación y Configuración
 Requisitos previos
@@ -191,10 +115,12 @@ pip
 Git
 
 Pasos de instalación
+
 1. Clonar el repositorio
 bashgit clone https://github.com/tu-usuario/App_Gestion_Escolar.git
 cd App_Gestion_Escolar
-2. Crear y activar el entorno virtual
+
+3. Crear y activar el entorno virtual
 bash# Windows
 python -m venv .venv
 .venv\Scripts\activate
@@ -202,18 +128,23 @@ python -m venv .venv
 # macOS / Linux
 python -m venv .venv
 source .venv/bin/activate
+
 3. Instalar dependencias
 bashpip install django
 pip install scikit-learn pandas
 pip install reportlab
-4. Aplicar migraciones
+
+5. Aplicar migraciones
 bashpy manage.py makemigrations
 py manage.py migrate
-5. Crear superusuario
+
+7. Crear superusuario
 bashpy manage.py createsuperuser
-6. Iniciar el servidor
+
+9. Iniciar el servidor
 bashpy manage.py runserver
-7. Acceder al sistema
+
+11. Acceder al sistema
 http://127.0.0.1:8000/
 Configuración de correo electrónico (opcional)
 Para activar las notificaciones por correo entre apoderados y profesores, agrega esto en settings.py:
@@ -226,7 +157,6 @@ EMAIL_HOST_PASSWORD = 'tu_contraseña_de_app'
 DEFAULT_FROM_EMAIL  = 'Liceo Municipal <tu_correo@gmail.com>'
 
 💡 Para Gmail es necesario activar la verificación en dos pasos y generar una contraseña de aplicación desde la configuración de seguridad de tu cuenta Google.
-
 
 📦 Módulos del Sistema
 URLs disponibles
@@ -260,7 +190,6 @@ respuesta, estado, fecha_envio, fecha_respuesta
 
 🤖 Machine Learning
 El módulo de predicciones utiliza un modelo de Random Forest entrenado dinámicamente con los datos del sistema en cada consulta.
-¿Cómo funciona?
 
 Se extraen todos los alumnos con promedio registrado
 Se construye un dataset con features: promedio y edad
